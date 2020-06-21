@@ -1,8 +1,7 @@
-#!/bin/sh
 #/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-# *   Mupen64plus - m64p_update.sh                                          *
-# *   Mupen64Plus homepage: http://code.google.com/p/mupen64plus/           *
-# *   Copyright (C) 2009 Richard Goedeken                                   *
+# *   Mupen64plus - make                                                    *
+# *   Mupen64Plus homepage: https://mupen64plus.org/                        *
+# *   Copyright (C) 2008 Marshallh                                          *
 # *                                                                         *
 # *   This program is free software; you can redistribute it and/or modify  *
 # *   it under the terms of the GNU General Public License as published by  *
@@ -20,25 +19,15 @@
 # *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
 # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-# terminate the script if any commands return a non-zero error code
-set -e
+@echo off
 
-if [ -z "$M64P_COMPONENTS" ]; then
-	M64P_COMPONENTS="core rom ui-console audio-sdl input-sdl rsp-hle video-rice video-glide64mk2"
-fi
+del demo.v64
 
-for component in ${M64P_COMPONENTS}; do
-	if [ "${component}" = "core" ]; then
-		component_type="library"
-	elif  [ "${component}" = "rom" ]; then
-		component_type=""
-	elif  [ "${component}" = "ui-console" ]; then
-		component_type="front-end"
-	else
-		component_type="plugin"
-	fi
+set path=C:\n64\bin
+set PSYQ_PATH=C:\n64\bin
 
-	echo "************************************ Update ${component} ${component_type}"
-	path="$(pwd)/source/mupen64plus-${component}/"
-	git --work-tree="${path}" --git-dir="${path}/.git" pull --ff-only $@
-done
+psymake /f makefile.mak
+
+ren demo.bin demo.v64
+del demo.sym
+del demo.map

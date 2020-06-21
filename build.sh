@@ -6,4 +6,6 @@ sudo apt-get install libfreetype6-dev &&
 sudo apt-get install nasm && 
 sudo apt-get install libboost-all-dev && 
 sudo ./scripts/pune_build.sh && 
-sudo ./scripts/pune_test.sh
+sudo ./test.sh &&
+sudo rm -rf ./bin && 
+cp -R ./test ./bin
